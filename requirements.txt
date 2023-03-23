@@ -1,0 +1,22 @@
+# core
+numpy
+matplotlib
+pillow
+h5py
+scikit-image
+opencv-python
+moviepy
+torch
+torchvision
+tensorboard
+tensorboardX
+gym
+urdfpy
+autolab_core
+trimesh
+python-fcl
+
+# RL
+wandb
+mpi4py
+

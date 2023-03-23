@@ -1,0 +1,87 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+	<model name="conveyor">
+		<pose>0 0 0 0 0 0</pose>
+
+		<link name="belt_visual">
+			<inertial>
+				<pose>0 0 0.66019 0 0 0</pose>
+				<inertia>
+					<ixx>7.5972</ixx>
+					<ixy>0</ixy>
+					<ixz>0</ixz>
+					<iyy>0.99673</iyy>
+					<iyz>0</iyz>
+					<izz>8.1168</izz>
+				</inertia>
+				<mass>71.953</mass>
+			</inertial>
+			<visual name="visual">
+				<pose>0 0 0 0 0 0</pose>
+				<geometry>
+					<mesh>
+						<uri>model://conveyor/meshes/conveyor_belt.stl</uri>
+					</mesh>
+				</geometry>
+				<material>
+					<ambient>1 1 1 1</ambient>
+				</material>
+			</visual>
+			<collision name='collision'>
+				<pose>0 0 0 1.570796327 0.0 1.570796327</pose>
+				<geometry>
+					<mesh>
+						<uri>model://conveyor/meshes/conveyor_simple.stl</uri>
+					</mesh>
+				</geometry>
+			</collision>
+		</link>
+
+		<link name="belt_moving">
+			<inertial>
+				<pose>0 0 0 0 0 0</pose>
+				<inertia>
+					<ixx>0.0</ixx>
+					<ixy>0.0</ixy>
+					<ixz>0.0</ixz>
+					<iyy>0.0</iyy>
+					<iyz>0.0</iyz>
+					<izz>0.0</izz>
+				</inertia>
+				<mass>100</mass>
+			</inertial>
+			<collision name='collision'>
+				<pose>0 0 0.0005 0 0 0</pose>
+				<geometry>
+					<box>
+						<size>0.425 1.2 0.001</size>
+					</box>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="belt_joint" type="prismatic">
+			<parent>belt_visual</parent>
+        	<child>belt_moving</child>
+			<pose>0 0 0.74 0 0 0</pose>
+			<axis>
+				<xyz>0 1 0</xyz>
+			</axis>
+			<limit>
+				<lower>0.0</lower>
+				<upper>1</upper>
+				<effort>1000</effort>
+				<velocity>1000</velocity>
+			</limit>
+		</joint>
+
+		
+		<plugin name="conveyor_belt_plugin" filename="libROSConveyorBeltPlugin.so">
+			<robot_namespace>/</robot_namespace>
+			<link>belt_moving</link>
+			<power>0</power>
+			<max_velocity>1.0</max_velocity>
+		</plugin>
+		
+	</model>
+</sdf>

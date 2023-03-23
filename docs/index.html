@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <title>AMP-LS</title>
+
+    <meta charset="UTF-8">
+    <meta property="og:title" content=AMP-LS>
+    <meta property="og:description" content="Yamada, Leveraging Scene Embeddings for Gradient-Based Motion Planning in Latent Space et al. ">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta property="og:type" content="website">
+    <meta name="viewport" content="width=device-width, initial-scale=1 minimum-scale=1.0">
+
+    <link rel="icon" type="image/png" href="img/A2I.png">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100, 100i,300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- Showdown -->
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+    <script src="js/figure-extension.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!-- WAVE -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <link rel="stylesheet" href="theme.css">
+
+    <script>
+        const classMap = {
+            ul: 'browser-default'
+        }
+
+        const bindings = Object.keys(classMap)
+        .map(key => ({
+            type: 'output',
+            regex: new RegExp(`<${key}(.*)>`, 'g'),
+            replace: `<${key} class="${classMap[key]}" $1>`
+        }));
+
+        const converter = new showdown.Converter({
+            extensions: [bindings, 'figure']
+        });
+        converter.setOption('parseImgDimensions', true);
+        converter.setOption('tables', true);
+        converter.setFlavor('github');
+
+        $("#markdown-body").ready(() => {
+            $.get( "content.md", (data) => {
+                const content_html = converter.makeHtml(data);
+                $("#markdown-body").html(content_html);
+            });
+        });
+
+    </script>
+
+    <body>
+        <!-- Header -->
+        <!-- Wide screen -->
+        <header class="hd-container w3-container hide-narrow content-center">
+            <div class="w3-cell-row" style="width: 90%; margin: auto; max-width: 1600px; margin-top: 80px; margin-bottom: 40px">
+                <div class="w3-container w3-cell w3-cell-middle">
+                    <div class="title">Leveraging Scene Embeddings</div>
+                    <div class="title">for Gradient-Based Motion Planning in Latent Space</div>
+                    <!-- Author -->
+                <div class="w3-row-padding">
+                    <div class="authorship-container">
+                        <ul class="horizontal-list">
+                            <li><a href="https://junjungoal.github.io/" target="_blank"><i class="far fa-user"></i> Jun Yamada<sup>* 1</sup></a></li>
+                            <li><a href="https://ascane.github.io/" target="_blank"><i class="far fa-user"></i> Chia-Man Hung<sup>* 1 2</sup></a></li>
+                            <li><a href="https://jacktcollins.com/" target="_blank"><i class="far fa-user"></i> Jack Collins<sup>1</sup> </a></li>
+                            <li><a href="https://ihavoutis.github.io/" target="_blank"><i class="far fa-user"></i> Ioannis Havoutis<sup>2</sup> </a></li>
+                            <li><a href="https://ori.ox.ac.uk/ori-people/ingmar-posner/" target="_blank"><i class="far fa-user"></i> Ingmar Posner<sup>1</sup> </a></li>
+                        </ul>
+                        <span class="school"><a href="https://ori.ox.ac.uk/labs/a2i/" target="_blank"><i class="fas fa-university"></i> Applied AI Lab (A2I), Oxford<sup>1</sup> </a></span>
+                        <span class="school"><a href="https://ori.ox.ac.uk/labs/drs/" target="_blank"><i class="fas fa-university"></i> Dynamic Robot Systems Lab (DRS), Oxford<sup>2</sup> </a></span>
+                        <div>
+                            <span><a href="https://www.icra2023.org/" target="_blank">IEEE International Conference on Robotics and Automation (ICRA), 2023</span>
+                        </div>
+                    </div>
+                    <!-- <div class="w3-card-4 w3-round-large furniture-grid" style="width: 80%; max-width: 800px"> -->
+                    <!--         <img width="100%" height="100%" src="img/teaser.png"> -->
+                    <!-- </div> -->
+
+                    </div>
+                    <div class="excerpt w3-padding-16" style="width: 80%; max-width: 700px; margin: auto;">
+                        Motion planning framed as optimisation in structured latent spaces has recently emerged as competitive with traditional methods in terms of planning success while significantly outperforming them in terms of computational speed. However, the real-world applicability of recent work in this domain remains limited by the need to express obstacle information directly in state-space, involving simple geometric primitives. In this work we address this challenge by leveraging learned scene embeddings together with a generative model of the robot manipulator to drive the optimisation process. In addition we introduce an approach for efficient collision checking which directly regularises the optimisation undertaken for planning. Using simulated as well as real-world experiments, we demonstrate that our approach, AMP-LS, is able to successfully plan in novel, complex scenes while outperforming competitive traditional baselines in terms of computation speed by an order of magnitude. We show that the resulting system is fast enough to enable closed-loop planning in real-world dynamic scenes.
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Narrow screen -->
+        <header class="hd-container w3-container hide-wide">
+            <div class="w3-row-padding w3-center w3-padding-24">
+                <span class="title">Leveraging Scene Embeddings <br/> for Gradient-Based Motion Planning in Latent Space</span>
+            </div>
+            <div class="w3-row-padding">
+                <!-- Author -->
+                <div class="authorship-container">
+                    <ul class="horizontal-list">
+                        <li><a href="https://junjungoal.github.io/" target="_blank"><i class="far fa-user"></i> Jun Yamada<sup>* 1</sup></a></li>
+                        <li><a href="https://ascane.github.io/" target="_blank"><i class="far fa-user"></i> Chia-Man Hung<sup>* 1 2</sup></a></li>
+                        <li><a href="https://jacktcollins.com/" target="_blank"><i class="far fa-user"></i> Jack Collins<sup>1</sup> </a></li>
+                        <li><a href="https://ihavoutis.github.io/" target="_blank"><i class="far fa-user"></i> Ioannis Havoutis<sup>2</sup> </a></li>
+                        <li><a href="https://ori.ox.ac.uk/ori-people/ingmar-posner/" target="_blank"><i class="far fa-user"></i> Ingmar Posner<sup>1</sup> </a></li>
+                    </ul>
+                    <span class="school"><a href="https://ori.ox.ac.uk/labs/a2i/" target="_blank"><i class="fas fa-university"></i> Applied AI Lab (A2I), Oxford<sup>1</sup> </a></span>
+                    <span class="school"><a href="https://ori.ox.ac.uk/labs/drs/" target="_blank"><i class="fas fa-university"></i> Dynamic Robot Systems Lab (DRS), Oxford<sup>2</sup> </a></span>
+                </div>
+
+            </div>
+            <div class="w3-row-padding w3-center w3-padding-16">
+                <div class="w3-card-4 w3-round-large furniture-grid" style="width: 80%; max-width: 400px">
+                        <img width="100%" height="100%" src="img/teaser.png">
+                </div>
+            </div>
+            <div class="w3-row-padding"><hr></div>
+            <div class="w3-row-padding w3-padding-16">
+                <div class="excerpt">
+                        Motion planning framed as optimisation in structured latent spaces has recently emerged as competitive with traditional methods in terms of planning success while significantly outperforming them in terms of computational speed. However, the real-world applicability of recent work in this domain remains limited by the need to express obstacle information directly in state-space, involving simple geometric primitives. In this work we address this challenge by leveraging learned scene embeddings together with a generative model of the robot manipulator to drive the optimisation process. In addition we introduce an approach for efficient collision checking which directly regularises the optimisation undertaken for planning. Using simulated as well as real-world experiments, we demonstrate that our approach, AMP-LS, is able to successfully plan in novel, complex scenes while outperforming competitive traditional baselines in terms of computation speed by an order of magnitude. We show that the resulting system is fast enough to enable closed-loop planning in real-world dynamic scenes.
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <div class="main-body">
+            <div class="w3-container">
+                <div class="w3-content" style="max-width:1000px;">
+                    <!-- Links -->
+                    <div class="link-container">
+                        <ul class="horizontal-list">
+                            <li><button class="w3-button waves-effect waves-light w3-card-4 grey lighten-2 w3-round-large"><i class="fas fa-file-alt"></i> <a href="" target="_blank"> Paper </a></button></li>
+                            <li><button class="w3-button waves-effect waves-light w3-card-4 grey lighten-2 w3-round-large"><i class="fas fa-code"></i> <a href="" target="_blank"> Code </a></button></li>
+                        </ul>
+                    </div>
+                    <!-- Markdown Body -->
+                    <div id="markdown-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="w3-center w3-light-grey w3-padding-32 w3-small">
+            <p style="color: grey">This work was supported by a UKRI/EPSRC Programme Grant [EP/V000748/1], we would also like to thank the University of Oxford for providing Advanced Research Computing (ARC) facility in carrying out this work (http://dx.doi.org/10.5281/zenodo.22558).</br> &copy; Copyright 2022, A2I, Oxford.</p>
+        </footer>
+
+    </body>
+</html>
